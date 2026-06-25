@@ -12,9 +12,34 @@
       <h1 id="app-title">Locale Dictionaries</h1>
       <button id="lang-toggle" type="button">EN</button>
     </header>
-    <main>
-      <p id="loading-text">Loading locales…</p>
-    </main>
+    <div id="controls">
+      <input type="text" id="search-input" placeholder="Search by language, country, or code…">
+    </div>
+    <div id="table-container">
+      <!-- Skeleton rows shown while loading -->
+      <div id="skeleton">
+        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
+        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
+        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
+        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
+        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
+      </div>
+      <table id="locales-table" style="display:none">
+        <thead>
+          <tr>
+            <th class="col-flag" data-i18n="table.flag">Прапор</th>
+            <th class="col-code" data-i18n="table.locale">Код</th>
+            <th class="col-lang" data-i18n="table.language">Мова</th>
+            <th class="col-country" data-i18n="table.country">Країна</th>
+            <th class="col-curr" data-i18n="table.currency">Валюта</th>
+            <th class="col-tld" data-i18n="table.tld">TLD</th>
+            <th class="col-btn" data-i18n="table.details">Деталі</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+      <p id="message-area" style="display:none"></p>
+    </div>
   </div>
   <script src="/public/i18n.js"></script>
   <script src="/public/app.js"></script>
