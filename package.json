@@ -1,0 +1,12 @@
+{
+  "name": "locale-dictionaries",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A comprehensive locale reference – codes, flags, languages, countries, currencies, TLDs, timezones and more",
+  "scripts": {
+    "deploy": "gh-pages -d public"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}

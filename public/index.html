@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Locale Dictionaries</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
-  <link rel="stylesheet" href="/public/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="app">
@@ -15,6 +15,10 @@
     </header>
     <input type="text" id="search-input" class="search" placeholder="Пошук за кодом, країною або мовою">
     <div id="table-container">
+      <div id="progress-wrapper" style="display:none">
+        <div id="progress-text">Завантаження локалей…</div>
+        <div id="progress-track"><div id="progress-bar"></div></div>
+      </div>
       <div id="skeleton"><div class="sk-row"><span class="sk sk-f"></span><span class="sk sk-c"></span><span class="sk sk-l"></span><span class="sk sk-co"></span><span class="sk sk-cu"></span><span class="sk sk-t"></span><span class="sk sk-b"></span></div><div class="sk-row"><span class="sk sk-f"></span><span class="sk sk-c"></span><span class="sk sk-l"></span><span class="sk sk-co"></span><span class="sk sk-cu"></span><span class="sk sk-t"></span><span class="sk sk-b"></span></div><div class="sk-row"><span class="sk sk-f"></span><span class="sk sk-c"></span><span class="sk sk-l"></span><span class="sk sk-co"></span><span class="sk sk-cu"></span><span class="sk sk-t"></span><span class="sk sk-b"></span></div></div>
       <table class="locales" id="locales-table" style="display:none">
         <thead>
@@ -39,7 +43,7 @@
       </div>
     </div>
   </div>
-  <script src="/public/i18n.js"></script>
-  <script src="/public/app.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -10,14 +10,17 @@
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
-  const langToggle  = $('#lang-toggle');
-  const searchInput = $('#search-input');
-  const table       = $('#locales-table');
-  const tbody       = $('#table-body');
-  const skeleton    = $('#skeleton');
-  const messageArea = $('#message-area');
-  const titleEl     = $('#app-title');
-  const thEls       = $$('#locales-table th[data-i18n]');
+  const langToggle   = $('#lang-toggle');
+  const searchInput  = $('#search-input');
+  const table        = $('#locales-table');
+  const tbody        = $('#table-body');
+  const skeleton     = $('#skeleton');
+  const progressWrap = $('#progress-wrapper');
+  const progressBar  = $('#progress-bar');
+  const progressText = $('#progress-text');
+  const messageArea  = $('#message-area');
+  const titleEl      = $('#app-title');
+  const thEls        = $$('#locales-table th[data-i18n]');
   const modalOverlay = $('#modal-overlay');
   const modalContent = $('#modal-content');
   const modalClose   = $('#modal-close');
@@ -209,27 +212,73 @@
     document.body.classList.remove('modal-open');
   }
 
-  /* ---------- fetch ---------- */
+  /* ---------- fetch with progress ---------- */
   async function loadData() {
     try {
-      skeleton.style.display = '';
+      // Показуємо скелетон (але ховаємо за прогрес-баром, коли є індикатор)
+      skeleton.style.display = 'none';
       table.style.display = 'none';
       messageArea.style.display = 'none';
+      progressWrap.style.display = 'block';
+      progressBar.style.width = '0%';
+      progressText.textContent = i18n.t('loading');
 
-      const res = await fetch('/locales.json');
+      const res = await fetch('./locales.json', {
+        // Без cache: 'no-cache' — дозволяємо браузеру кешувати 2MB
+      });
 
       if (!res.ok) throw new Error('HTTP ' + res.status);
 
-      locales = await res.json();
+      // Для 2MB файла показуємо прогрес, якщо браузер підтримує Content-Length
+      const contentLength = res.headers.get('Content-Length');
+      const total = contentLength ? parseInt(contentLength, 10) : null;
+
+      if (!res.body) {
+        // Якщо ReadableStream не підтримується (старий браузер) — читаємо одразу
+        locales = await res.json();
+      } else {
+        // Стрімимо з прогресом
+        const reader = res.body.getReader();
+        const chunks = [];
+        let received = 0;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value);
+          received += value.length;
+
+          if (total) {
+            const pct = Math.min(100, Math.round((received / total) * 100));
+            progressBar.style.width = pct + '%';
+          } else {
+            // Якщо немає Content-Length — просто анімуємо
+            progressBar.style.width = '75%';
+          }
+        }
+
+        // Складаємо Uint8Array і декодуємо
+        const all = new Uint8Array(received);
+        let pos = 0;
+        for (const chunk of chunks) {
+          all.set(chunk, pos);
+          pos += chunk.length;
+        }
+        const decoder = new TextDecoder('utf-8');
+        locales = JSON.parse(decoder.decode(all));
+      }
+
       if (!Array.isArray(locales)) throw new Error('Invalid data');
 
-      skeleton.style.display = 'none';
+      // Готово — ховаємо прогрес, показуємо таблицю
+      progressWrap.style.display = 'none';
       filtered = locales.slice();
       renderTable(filtered);
       updateI18n();
 
     } catch (err) {
       console.error('Failed to load locales:', err);
+      progressWrap.style.display = 'none';
       skeleton.style.display = 'none';
       table.style.display = 'none';
       messageArea.style.display = 'block';
