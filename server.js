@@ -4,7 +4,7 @@ const path = require('path');
 
 const PORT = 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
-const LOCALES_PATH = path.join(__dirname, 'locales.json');
+const LOCALES_PATH = path.join(PUBLIC_DIR, 'locales.json');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -37,8 +37,8 @@ const server = http.createServer((req, res) => {
     pathname = pathname.slice(0, -1);
   }
 
-  // Route: /api/locales → locales.json
-  if (pathname === '/api/locales') {
+  // Route: /api/locales or /locales.json → locales.json
+  if (pathname === '/api/locales' || pathname === '/locales.json') {
     serveFile(res, LOCALES_PATH, 'application/json; charset=utf-8');
     return;
   }

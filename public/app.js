@@ -216,7 +216,7 @@
       table.style.display = 'none';
       messageArea.style.display = 'none';
 
-      const res = await fetch('/api/locales');
+      const res = await fetch('/locales.json');
 
       if (!res.ok) throw new Error('HTTP ' + res.status);
 
