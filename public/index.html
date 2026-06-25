@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Locale Dictionaries</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
   <link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
@@ -12,33 +13,30 @@
       <h1 id="app-title">Locale Dictionaries</h1>
       <button id="lang-toggle" type="button">EN</button>
     </header>
-    <div id="controls">
-      <input type="text" id="search-input" placeholder="Search by language, country, or code…">
-    </div>
+    <input type="text" id="search-input" class="search" placeholder="Пошук за кодом, країною або мовою">
     <div id="table-container">
-      <!-- Skeleton rows shown while loading -->
-      <div id="skeleton">
-        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
-        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
-        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
-        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
-        <div class="skeleton-row"><div class="sk sk-flag"></div><div class="sk sk-code"></div><div class="sk sk-lang"></div><div class="sk sk-country"></div><div class="sk sk-curr"></div><div class="sk sk-tld"></div><div class="sk sk-btn"></div></div>
-      </div>
-      <table id="locales-table" style="display:none">
+      <div id="skeleton"><div class="sk-row"><span class="sk sk-f"></span><span class="sk sk-c"></span><span class="sk sk-l"></span><span class="sk sk-co"></span><span class="sk sk-cu"></span><span class="sk sk-t"></span><span class="sk sk-b"></span></div><div class="sk-row"><span class="sk sk-f"></span><span class="sk sk-c"></span><span class="sk sk-l"></span><span class="sk sk-co"></span><span class="sk sk-cu"></span><span class="sk sk-t"></span><span class="sk sk-b"></span></div><div class="sk-row"><span class="sk sk-f"></span><span class="sk sk-c"></span><span class="sk sk-l"></span><span class="sk sk-co"></span><span class="sk sk-cu"></span><span class="sk sk-t"></span><span class="sk sk-b"></span></div></div>
+      <table class="locales" id="locales-table" style="display:none">
         <thead>
           <tr>
-            <th class="col-flag" data-i18n="table.flag">Прапор</th>
-            <th class="col-code" data-i18n="table.locale">Код</th>
-            <th class="col-lang" data-i18n="table.language">Мова</th>
-            <th class="col-country" data-i18n="table.country">Країна</th>
-            <th class="col-curr" data-i18n="table.currency">Валюта</th>
-            <th class="col-tld" data-i18n="table.tld">TLD</th>
-            <th class="col-btn" data-i18n="table.details">Деталі</th>
+            <th data-i18n="table.flag">Flag</th>
+            <th data-i18n="table.locale">Code</th>
+            <th data-i18n="table.language">Language</th>
+            <th data-i18n="table.country">Country</th>
+            <th data-i18n="table.currency">Currency</th>
+            <th data-i18n="table.tld">TLD</th>
+            <th data-i18n="table.details">Details</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
       </table>
       <p id="message-area" style="display:none"></p>
+    </div>
+    <div id="modal-overlay" style="display:none">
+      <div id="modal-card" role="dialog" aria-modal="true">
+        <button id="modal-close" type="button" aria-label="Close">&times;</button>
+        <div id="modal-content"></div>
+      </div>
     </div>
   </div>
   <script src="/public/i18n.js"></script>
